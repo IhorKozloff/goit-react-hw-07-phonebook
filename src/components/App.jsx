@@ -1,31 +1,33 @@
+import { AppWrapper } from "components/App.styled";
 import { SearchBar} from "components/SearchBar/SearchBar";
 import { ContactsList } from "./ContactsList/ContactsList";
 import { SearchingFilter } from "./SearchingFilter/SearchingFilter";
-import { useDispatch } from "react-redux";
-import { removeContact } from 'Redux/Store';
+import { useState } from "react";
+import { useGetContactsQuery } from "Redux/contactsSlice";
+
 
 export const App = () =>  {
 
+  const { data } = useGetContactsQuery()
+ 
+  const [filterValue, setfilterValue] = useState('');
 
-  const dispatch = useDispatch();
-
-  const onDeleteContact = (delitingTargetId) => {
-    dispatch(removeContact(delitingTargetId))
+  const onFilterField = (event) => {
+      console.log(event.target.value)
+      setfilterValue(event.target.value.toLowerCase())
   };
 
   return (
-    <>
-      <h1>Phonebook</h1>
-      <SearchBar></SearchBar>
-        
-      <h1>Contacts</h1>
+      <AppWrapper>
+        <h1>Phonebook</h1>
+        <SearchBar></SearchBar>
+          
+        <h1>Contacts</h1>
 
-      <SearchingFilter/>
+        <SearchingFilter onFilterField={onFilterField}/>
 
-      <ContactsList onDeleteContact={onDeleteContact}/>
-        
-    </>
-    
+        <ContactsList filterValue={filterValue} data={data}/>
+      </AppWrapper>
   );
 };
 

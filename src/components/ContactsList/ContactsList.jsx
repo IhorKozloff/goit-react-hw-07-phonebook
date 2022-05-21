@@ -1,32 +1,24 @@
 import React from 'react';
 import { ContactsItem } from "components/ContactsItem/ContactsItem";
-import { useSelector } from "react-redux";
-import { getContacts, getFilterStatus } from 'Redux/Store';
-import PropTypes from 'prop-types';
 
-export const ContactsList = ({onDeleteContact}) => {
 
-    const contactsStateData = useSelector(getContacts);
-    const filterStateData = useSelector(getFilterStatus).toLowerCase();
 
-    const filteredContacts = contactsStateData.filter(item => item.name.toLowerCase().includes(filterStateData))
+export const ContactsList = ({data, filterValue}) => {
 
     return <ul>
         {
-            filteredContacts.map(item => {
+           data && data.map(item => {
                 
-                   return <ContactsItem key={item.id} 
-                    id={item.id} 
-                    name={item.name}
-                    number={item.number}
-                    onDeleteContact={onDeleteContact}
-                />
+                    return (
+                        item.name.toLowerCase().includes(filterValue) && <ContactsItem key={item.id} 
+                            id={item.id} 
+                            name={item.name}
+                            phone={item.phone}
+                        />
+                    )
+               
               
             })
         }
     </ul>
-};
-
-ContactsList.propTypes = {
-    onDeleteContact: PropTypes.func.isRequired,
 };

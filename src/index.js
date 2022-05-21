@@ -15,3 +15,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </Provider>
   </React.StrictMode>
 );
+
+// base url https://62860485f0e8f0bb7c0e5d72.mockapi.io/

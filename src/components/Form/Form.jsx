@@ -2,21 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import { InputStyled, DataForm, InputWrapper } from 'components/Form/Form.styled';
-// import * as yup from 'yup';
 import { nanoid } from 'nanoid';
-import { useSelector } from "react-redux";
-import { getContacts } from 'Redux/Store';
+
 
 export const ContactsForm = ({setNewContact}) => {
 
-
-    const contactsNamesList = useSelector(getContacts).map(item => item.name.toLowerCase())
-
-
     const onFormSubmit = (values, {resetForm}) => {
-        if (contactsNamesList.includes(values.name.toLowerCase())) {
-            alert(`${values.name} is already in contacts`);
-        } else {
             const newContact = {
                 id: nanoid(),
                 name: values.name,
@@ -24,10 +15,7 @@ export const ContactsForm = ({setNewContact}) => {
             };
     
             setNewContact(newContact);
-            
             resetForm();
-        }
-        
     };
 
 

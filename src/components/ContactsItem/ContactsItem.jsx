@@ -1,14 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ContactActionBtn, ContactItem, ContactNumber  } from 'components/ContactsItem/ContactsItem.styled';
+import { ContactActionBtn, ContactItem, ContactNumber, ContactName  } from 'components/ContactsItem/ContactsItem.styled';
+import { useRemoveContactMutation } from "Redux/contactsSlice";
 
-export const ContactsItem = ({ id, name, number, onDeleteContact}) => {
+export const ContactsItem = ({ id, name, phone }) => {
+
+const [removeContact, { isLoading }] = useRemoveContactMutation();
 
     return (
         <ContactItem  key={id} id={id}>
-            {name}:<ContactNumber>{number}</ContactNumber>
-            <ContactActionBtn type="button" onClick={() => {
-                onDeleteContact(id);
+            <ContactName>{name}:</ContactName>
+            <ContactNumber>{phone}</ContactNumber>
+            <ContactActionBtn type="button" disabled={isLoading} onClick={() => {
+               removeContact(id);
             }}>
                 Delete
             </ContactActionBtn>
@@ -19,6 +23,5 @@ export const ContactsItem = ({ id, name, number, onDeleteContact}) => {
 ContactsItem.propTypes = {
     id: PropTypes.string.isRequired, 
     name: PropTypes.string.isRequired, 
-    number: PropTypes.string.isRequired, 
-    onDeleteContact: PropTypes.func.isRequired,
+    phone: PropTypes.string.isRequired, 
 };
