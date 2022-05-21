@@ -16,15 +16,20 @@ export const SearchBar = () => {
         }
 
         const existingContact = data.find(item => item.name.toLowerCase() === newContact.name.toLowerCase())
+        const onAddContacts = async (contact) => {
+            try {
+                await addContact(contact);
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+
 
         if (existingContact) {
             alert(`${newContact.name} is already in contacts`);
         } else {
-            try {
-                addContact(newContact);
-            } catch (error) {
-                console.log(error)
-            }
+            onAddContacts(newContact)
         }
 
         return setNewContact('');
