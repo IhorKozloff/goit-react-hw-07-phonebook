@@ -9,7 +9,9 @@ export const SearchingFilter = ({onFilterField}) => {
     return (
         <SearchingWrapper>
             Find contacts by Name
-            <FilterField onChange={onFilterField}></FilterField>
+            <FilterField onChange={(event) => {
+                onFilterField(event.target.value)   
+            }}></FilterField>
         </SearchingWrapper>
     );
 };

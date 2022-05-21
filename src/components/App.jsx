@@ -2,20 +2,15 @@ import { AppWrapper } from "components/App.styled";
 import { SearchBar} from "components/SearchBar/SearchBar";
 import { ContactsList } from "./ContactsList/ContactsList";
 import { SearchingFilter } from "./SearchingFilter/SearchingFilter";
-import { useState } from "react";
-import { useGetContactsQuery } from "Redux/contactsSlice";
+
+import { useFilteredContacts } from 'Hooks/useFilteredContacts'
+
+
 
 
 export const App = () =>  {
 
-  const { data } = useGetContactsQuery()
- 
-  const [filterValue, setfilterValue] = useState('');
-
-  const onFilterField = (event) => {
-      console.log(event.target.value)
-      setfilterValue(event.target.value.toLowerCase())
-  };
+  const  {filterValue, setfilterValue, filteredContacts} = useFilteredContacts(); 
 
   return (
       <AppWrapper>
@@ -24,9 +19,9 @@ export const App = () =>  {
           
         <h1>Contacts</h1>
 
-        <SearchingFilter onFilterField={onFilterField}/>
+        <SearchingFilter onFilterField={setfilterValue}/>
 
-        <ContactsList filterValue={filterValue} data={data}/>
+        <ContactsList filterValue={filterValue} data={filteredContacts}/>
       </AppWrapper>
   );
 };
