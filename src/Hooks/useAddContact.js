@@ -20,6 +20,7 @@ export const useAddContact = () => {
         const onAddContacts = async (contact) => {
             try {
                 await addContact(contact);
+                setNewContact('');
             } catch (error) {
                 console.log(error)
             }
@@ -33,7 +34,7 @@ export const useAddContact = () => {
             onAddContacts(newContact)
         }
 
-        return setNewContact('');
+
     },[addContact, data, newContact]);
 
     return { setNewContact }
